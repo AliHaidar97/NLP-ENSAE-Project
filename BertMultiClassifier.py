@@ -10,7 +10,7 @@ from torch.optim import Adam
 from torch.utils.data import TensorDataset, DataLoader, RandomSampler, SequentialSampler
 from torch.nn.utils import clip_grad_norm_
 from IPython.display import clear_output
-
+from tqdm import tqdm
 
 #Create an encoder using Bert and decoder as linear layer
 class BertMultiClassifier(nn.Module):
@@ -48,7 +48,7 @@ def train(model_clf , train_tokens_ids, train_masks, y_train,  BATCH_SIZE = 8, E
 
     optimizer = Adam(param_optimizer, lr=3e-6)
     
-    for epoch_num in range(EPOCHS):
+    for epoch_num in tqdm(range(EPOCHS)):
         model_clf.train()
         train_loss = 0
         for step_num, batch_data in enumerate(train_dataloader):
@@ -87,19 +87,28 @@ def test(model_clf, test_tokens_ids, test_masks, y_test, BATCH_SIZE = 8):
     
     model_clf.eval()
     bert_predicted = []
-    all_logits = []
+    loss_pred = 0
+    loss_all = 0
     with torch.no_grad():
-        for step_num, batch_data in enumerate(test_dataloader):
+
+        for step_num, batch_data in tqdm(enumerate(test_dataloader)):
 
             token_ids, masks, labels = tuple(t.to(device) for t in batch_data)
 
             logits = model_clf(token_ids, masks)
             loss_func = nn.CrossEntropyLoss()
             loss = loss_func(logits, labels.squeeze())
-            numpy_logits = logits.cpu().detach().numpy()
-            
-            bert_predicted += list(numpy_logits[:, 0] > 0.5)
-            all_logits += list(numpy_logits[:, 0])
 
-    np.mean(bert_predicted)       
+            loss_all+= loss.item()
+        
+            numpy_logits = logits.cpu().detach().numpy()    
+            pred = np.argmax(numpy_logits,axis = 1)
+            loss_pred = np.sum(pred != labels.cpu().detach().numpy() )
+            bert_predicted += list(pred)
+
+   
+    bert_predicted = np.array(bert_predicted)
+    acc = (np.sum(bert_predicted == y_test)/len(y_test)) *100
+    return acc, bert_predicted, labels
+
     
