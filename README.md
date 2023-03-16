@@ -10,7 +10,7 @@ We compared the performance of utterance classifier and context classifier.
 We developped three models : 
 
 
-1 -### BertMLP1Layer: 
+### BertMLP1Layer: 
 
 The model utilizes the embedding layer of a pre-trained BERT model. Following this, we incorporated a concatenation layer of GlobalMaxPooling1D and GlobalAveragePooling1D after the embedding. The resulting output was then passed through a single neural network layer.
 
