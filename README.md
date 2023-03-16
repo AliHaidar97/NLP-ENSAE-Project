@@ -34,4 +34,5 @@ The main difference between this model and BertMLP1Layer is that we added an add
 
 ### BertGRU : 
 
-<img src="GRUModel.png" alt="Bert GRU " />
+![Screenshot](GRUModel.png.png)
+
