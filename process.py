@@ -25,7 +25,7 @@ def tokenize(text, tokenizer):
 
 def mask(token_ids):
     
-    return [[i > 0 for i in ii] for ii in token_ids]
+    return [[i >= 0 for i in ii] for ii in token_ids]
 
 
 

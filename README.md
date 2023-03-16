@@ -37,3 +37,6 @@ The main difference between this model and BertMLP1Layer is that we added an add
 
 
 
+We trained the models using Kaggle : 
+
+
