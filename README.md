@@ -1,14 +1,13 @@
 # NLP-ENSAE-Project
 
 
-This paper details the development and evaluation of an intent classifier for sequence labeling in spoken dialog. 
+The focus of this paper is on the creation and evaluation of an intent classifier designed for sequence labeling in spoken dialog.
 
-The model was trained and tested using the SILICONE dataset as the benchmark.
+Using the SILICONE dataset as a benchmark, the intent classifier was trained and tested to assess its performance.
 
-We compared the performance of utterance classifier and context classifier.
+The performance of the utterance classifier and context classifier were compared to each other in this study.
 
-We developped three models : 
-
+Three different models were developed as part of this research project : BertMLP1Layer, BertMLP2Layers, BertGRU
 
 ### BertMLP1Layer: 
 
